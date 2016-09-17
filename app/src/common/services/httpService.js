@@ -9,7 +9,7 @@ angular
 		this.get = function(path, path_variable, param) {
 			path = BASE_URL + path;
 			var q = $q.defer();
-			param.id = param.id+appendAppId(param.id);
+			param.id = appendAppId(param.id);
 			$resource(path, path_variable,{get:{method:'GET', params:param, transformRequest:transformReqHandler, transformResponse:transformResHandler}}).get(function(data) {
 				q.resolve(data);
 			},function(error){
