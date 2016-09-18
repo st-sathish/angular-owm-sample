@@ -6,11 +6,11 @@ angular
 	function httpService($resource, $q, $window, OWM_APP_ID) {
 		var BASE_URL = "http://api.openweathermap.org/data/2.5/";
 
-		this.get = function(path, path_variable, param) {
+		this.get = function(path, path_variable, param, c) {
 			path = BASE_URL + path;
 			var q = $q.defer();
 			param.id = appendAppId(param.id);
-			$resource(path, path_variable,{get:{method:'GET', params:param, transformRequest:transformReqHandler, transformResponse:transformResHandler}}).get(function(data) {
+			$resource(path, path_variable,{get:{method:'GET', params:param, cache:c, transformRequest:transformReqHandler, transformResponse:transformResHandler}}).get(function(data) {
 				q.resolve(data);
 			},function(error){
 				q.reject(error);
@@ -19,7 +19,7 @@ angular
 		};
 
 		function appendAppId(param) {
-			return param+"&appid="+OWM_APP_ID;
+			return param+"&units=metric&appid="+OWM_APP_ID;
 		};
 
 		function transformReqHandler(data, headers) {

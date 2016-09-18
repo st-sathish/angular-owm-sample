@@ -9,7 +9,7 @@ angular
 
 		var xData = [];
 		var yData = [];
-
+		var results = undefined;
 		var citiesId = ['1269843','1264527','1261481','1275339'];
 
 	//{"_id":1269843,"name":"Hyderabad","country":"IN","coord":{"lon":78.474442,"lat":17.37528}}
@@ -21,7 +21,6 @@ angular
 		* Initlialize here
 		*/
 		(function() {
-			getNext5DaysWeather();
 			getCitiesWeatherReport();
 		})();
 
@@ -37,7 +36,7 @@ angular
 					cityStr = cityStr+",";
 				}
 			}
-			param.id = cityStr+"&units=metric";
+			param.id = cityStr;
 			HttpService.get(GET_WEATHER_PATH, undefined, param).then(function(datum) {
 				parseSuccessResponse(datum.list);
 			}, function(error) {
@@ -46,12 +45,12 @@ angular
 		};
 
 		function parseSuccessResponse(list) {
-			list = decendingOrder(list);
+			results = decendingOrder(list);
 			var yDat = {};
 			yDat.data = [];
-			for(var i =0;i < list.length;i++) {
-				xData.push(list[i].name);
-				yDat.data.push(list[i].main.temp);
+			for(var i =0;i < results.length;i++) {
+				xData.push(results[i].name);
+				yDat.data.push(results[i].main.temp);
 			}
 			yDat.name="Temparature";
 			yData.push(yDat);
@@ -59,12 +58,11 @@ angular
 			$scope.lineChartYData = yData;
 		};
 
-		function getNext5DaysWeather() {
+		$scope.getNext5DaysWeather = function(iid) {
 			var param = {};
-			param.id = '1269843';
-			HttpService.get(GET_WEATHER_FORECAST, undefined, param).then(function(datum) {
-				console.debug("hello");
-				console.debug(datum);
+			param.id = iid;
+			HttpService.get(GET_WEATHER_FORECAST, undefined, param, true).then(function(datum) {
+				$scope.forecast = extractResult(datum);
 			}, function(error) {
 
 			});
@@ -82,5 +80,24 @@ angular
 				}
 			}
 			return list;
+		};
+
+		$scope.getCustomTootip = function(n) {
+			var id = undefined;
+			for(var i =0;i <results.length;i++) {
+				if(results[i].name == n.name) {
+					id = results[i].id;
+					break;
+				}
+			}
+			return $scope.getNext5DaysWeather(id);
+		};
+
+		function extractResult(result) {
+			for(var i =0;i < result.list.length;i++) {
+				var strArr = result.list[i].dt_txt.split(" ");
+				result.list[i].dt_txt = strArr[0];
+			}
+			return result;
 		}
 	};

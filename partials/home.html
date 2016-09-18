@@ -1,5 +1,14 @@
 <div>
+	<h3>Next 5 days Weather condition</h3>
+	<div>
+		<h5>Next 5 days Weather condition at <b>{{forecast.city.name}}</b></h5>
+		<ul>
+			<li ng-repeat="item in forecast.list | unique:'dt_txt'">{{item.dt_txt}}&nbsp;&nbsp;<span>{{item.main.temp}} °C<span></li>
+		</ul>
+	</div>
+</div>
+<div>
     <chart title="Open Weather Map" xData="lineChartXData" 
     yData="lineChartYData" xName="Cities" yName="Temparature" 
-    subtitle="Cities vs Temparature" yMax="50" yMin="0"></chart>
+    subtitle="Cities vs Temparature" yMax="50" yMin="0" getCustomTootip="getCustomTootip"></chart>
 </div>

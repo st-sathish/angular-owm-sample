@@ -2,7 +2,7 @@
 
 angular
 	.module('owmCityGraph')
-	.directive('chart', function () {
+	.directive('chart', ['$log', 'HttpService', function ($log, HttpService) {
     return {
         restrict:'E',
         template:'<div></div>',
@@ -49,9 +49,10 @@ angular
                     min: attrs.ymin
                 },
                 tooltip:{
-                    formatter:scope[attrs.formatter]||function () {
-                        console.debug(this);
-                        return '<b>' + this.y + '</b>'
+                    useHTML: false,
+                    formatter:function () {
+                        scope.getCustomTootip({name:this.x});
+                        return "<div>"+this.y+"</div>";
                     }
                 },
                 legend:{
@@ -80,4 +81,4 @@ angular
         }
     }
 
-})
+}]);
