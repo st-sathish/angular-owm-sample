@@ -1,6 +1,10 @@
 ## Angularjs Open Weather Map Assignment ##
 
-### Install nodejs on Windows ###
+### Output sample ###
+
+![city weather graph](https://raw.githubusercontent.com/st-sathish/angular-owm-sample/develop/screen_shot/screen.png)
+
+### Install nodejs globally on Windows ###
 
 Download & install [nodejs] (https://nodejs.org/en/download/)
 
@@ -16,7 +20,7 @@ npm install -g bower
 
 - Clone or Download this app
 
-### Run the below command in the root directory to install node modules ###
+#### Run the below command in the root directory to install node modules ####
 
 ```sh
 
@@ -24,7 +28,7 @@ npm install
 
 ```
 
-### Run the below command in the root directory to install bower components ###
+#### Run the below command in the root directory to install bower components ####
 
 ```sh
 
@@ -32,14 +36,14 @@ bower install
 
 ```
 
-## Note ###
+#### Note ####
 
 - Replace root project location with your favourite location in the server.js
 
-### Run the app ###
+#### Start the server ####
 
 - open the command prompt or MS-Dos
-- Go to your root directory and use the below command
+- Go to application root directory and use the below command
 
 ```sh
 
